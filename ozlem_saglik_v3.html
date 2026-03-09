@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <title>Özlem's Health Tracker</title>
+    <script>
+        // Check for ServiceWorker support
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', function() {
+                navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+                    console.log('ServiceWorker registration successful with scope: ', registration.scope);
+                }, function(err) {
+                    console.log('ServiceWorker registration failed: ', err);
+                });
+            });
+        }
+
+        // Function to send notifications
+        function sendNotification() {
+            if (Notification.permission === 'granted') {
+                new Notification('Time for your health check!', {
+                    body: "Don't forget to log your data!",
+                });
+            }
+        }
+
+        // Request notification permission
+        function requestNotificationPermission() {
+            if (Notification.permission !== 'denied') {
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        sendNotification();
+                    }
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to Özlem's Health Tracker</h1>
+    <button onclick="requestNotificationPermission()">Enable Notifications</button>
+    <script>
+        // Local Storage Functionality
+        function saveData() {
+            const healthData = { today: new Date().toLocaleDateString(), status: "Healthy" };
+            localStorage.setItem('healthData', JSON.stringify(healthData));
+        }
+
+        function loadData() {
+            const data = localStorage.getItem('healthData');
+            if (data) {
+                console.log('Health Data:', JSON.parse(data));
+            }
+        }
+
+        // Load data when the page is loaded
+        window.onload = loadData;
+    </script>
+</body>
+</html>
