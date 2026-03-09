@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="manifest" href="manifest.json">
+    <title>Health Tracker</title>
+</head>
+<body>
+    <h1>Health Tracking Application</h1>
+    <p>Welcome to the comprehensive health tracking application!</p>
+    <script>
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('service-worker.js')
+            .then(function(registration) {
+                console.log('Service Worker registered with scope:', registration.scope);
+            }).catch(function(error) {
+                console.error('Service Worker registration failed:', error);
+            });
+        }
+
+        // Push Notification Logic
+        function schedulePushNotification() {
+            // Logic for scheduling push notifications
+            console.log('Push notification scheduled.');
+        }
+    </script>
+</body>
+</html>
